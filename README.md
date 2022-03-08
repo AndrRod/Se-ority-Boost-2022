@@ -1,8 +1,6 @@
 # CHALLENGE BACKEND - Java - Spring Boot (API REST) 🚀
 
-
-
-##Consigna
+## Consigna
 - El objetivo de este challenge es desarrollar una API REST siguiendo las especificaciones que
 indicaremos luego. Este servicio analizará textos y devolverá conteos acerca de caracteres y
 palabras. Todas las interacciones tendrán efecto sobre la base de datos para alguna operación
