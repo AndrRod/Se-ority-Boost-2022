@@ -12,7 +12,7 @@ public class Text {
     @Column(unique = true)
     @NotBlank(message = "no debe estar en blanco.")
     private String hash;
-    private Integer chars;
+    private int chars;
     private HashMap<String, Number> result;
 
     public Text() {

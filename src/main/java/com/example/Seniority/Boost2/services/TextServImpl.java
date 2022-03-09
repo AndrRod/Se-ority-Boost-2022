@@ -9,11 +9,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.AccessType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.lang.Integer.parseInt;
+import static java.lang.String.valueOf;
 
 
 @Service
@@ -79,11 +84,45 @@ public class TextServImpl implements TextService{
         return repositoryText.findById(id);
     }
 
+
+
     @Override
-    public List<Text> findAllText() {
-        if(repositoryText.findAll().isEmpty()) throw new NotFoundException("no user found") ;
-        return repositoryText.findAll();
+    public List<Text> findByChars(int chars) {
+        List<Text> listText = repositoryText.findByChars(chars);
+        if(listText.isEmpty()) throw new NotFoundException("no user with that chars found") ;
+        return listText;
     }
+
+    @Override
+    public Page<Text> findAllText(int pag, int size) {
+        if(repositoryText.findAll().isEmpty()) throw new NotFoundException("no user found");
+        return  repositoryText.findAll(PageRequest.of(pag, size));
+    }
+
+    @Override
+    public Page<Text> paginacion(String page, String rpp) {
+        int page1;
+        int rpp1;
+        if(page == null || rpp == null){
+            page1 = page == null ? 0 : Integer.valueOf(page);
+            rpp1 = page == null ? 10 : Integer.valueOf(rpp) > 100 ? 100 : Integer.valueOf(rpp);
+        }
+        page1 = Integer.valueOf(page) < 0 ? 0 : Integer.valueOf(page);
+        rpp1 = Integer.valueOf(rpp) < 10 ? 10 : Integer.valueOf(rpp) > 100 ? 100 : Integer.valueOf(rpp);
+        log.warn(String.valueOf(page1));
+        log.warn(String.valueOf(rpp1));
+//        page1 = page < 0 ? 0 : page;
+//        rpp1 = rpp < 10 ? 10 : rpp > 100 ? 100 : rpp;
+
+//        rpp1 = rpp > 100 ? 100 : rpp;
+//        Page page1 = repositoryText.findAll(PageRequest.of(page, rpp));
+//        log.warn(String.valueOf(page1.getContent()));
+//        if(page1.isEmpty()) throw new NotFoundException("no user found") ;
+        if (repositoryText.findAll(PageRequest.of(page1, rpp1)).getContent().isEmpty()) throw new NotFoundException("no user found");
+        return repositoryText.findAll(PageRequest.of(page1, rpp1));
+    }
+
+
 
     public String convertHash(String hash){
         Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);

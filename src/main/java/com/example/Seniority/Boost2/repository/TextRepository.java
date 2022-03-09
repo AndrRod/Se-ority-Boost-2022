@@ -6,10 +6,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface TextRepository extends JpaRepository<Text, Long> {
-    Text findByHash(String hash);
+    List<Text> findByChars(int Chars);
     Page<Text> findAll(Pageable pageable);
 
     boolean existsByHash(String hash);
+
 }
