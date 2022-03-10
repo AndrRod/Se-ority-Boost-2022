@@ -9,10 +9,9 @@ public class Text {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
-    @NotBlank(message = "no debe estar en blanco.")
     private String hash;
     private int chars;
+    @Lob
     private HashMap<String, Number> result;
 
     public Text() {

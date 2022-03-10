@@ -18,29 +18,40 @@ import java.util.Date;
 public class CustomizedResponseEntityExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     public final ResponseEntity<ErrorInfo> handleNotFoundException(NotFoundException ex, WebRequest request) {
-            String messageDefault = "An error occurred when processing the text";
-            String message = ex.getMessage().isEmpty() || ex.getMessage() == "No message available" ? messageDefault : ex.getMessage();
-                ErrorInfo exceptionResponse = new ErrorInfo(HttpStatus.NOT_FOUND.value(), message,
-                ((ServletWebRequest)request).getRequest().getRequestURI(), true);
-//                request.getDescription(false), true);
+        String message = ex.getMessage();
+        ErrorInfo exceptionResponse = new ErrorInfo(HttpStatus.NOT_FOUND.value(), message,
+        ((ServletWebRequest)request).getRequest().getRequestURI(), true);
+//               ESTA LINEA ES PARA DEVOLVER URL request.getDescription(false), true);
         return new ResponseEntity<ErrorInfo>(exceptionResponse, HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(BadRequestException.class)
     public final ResponseEntity<ErrorInfo> handleBadReqException(BadRequestException ex, WebRequest request) {
-        String messageDefault = "An error occurred when processing the text";
-        String message = ex.getMessage() == "No message available"  ? messageDefault : ex.getMessage();
+        String message;
+        System.out.println(ex.getMessage());
+        if(ex.getMessage().isEmpty() || ex.getMessage() == "No message available") {
+            message = "An error occurred when processing the text";
+        }else{
+            message = ex.getMessage();
+        }
         ErrorInfo exceptionResponse = new ErrorInfo(HttpStatus.BAD_REQUEST.value(), message,
                 ((ServletWebRequest)request).getRequest().getRequestURI(), true);
-//                request.getDescription(false), true);
         return new ResponseEntity<ErrorInfo>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 
 //    modificando aca abajo las excepciones que vienen por defecto
     @ExceptionHandler(NumberFormatException.class)
-    public final ResponseEntity<ErrorInfo> numberFormatException(WebRequest request) {
-        String message = "Error: the character is not a number";
-        ErrorInfo exceptionResponse = new ErrorInfo(HttpStatus.INTERNAL_SERVER_ERROR.value(), message,
+    public final ResponseEntity<ErrorInfo> numberFormatException(WebRequest request, NumberFormatException ex) {
+        String message = "Error: " + ex.getMessage();
+//        String message = "An error occurred when processing the text";
+        ErrorInfo exceptionResponse = new ErrorInfo(HttpStatus.UNPROCESSABLE_ENTITY.value(), message,
                 ((ServletWebRequest)request).getRequest().getRequestURI(), true);
-        return new ResponseEntity<ErrorInfo>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<ErrorInfo>(exceptionResponse, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+    @ExceptionHandler(IllegalArgumentException.class)
+    public final ResponseEntity<ErrorInfo> ilegalArgumentException(WebRequest request, IllegalArgumentException ex) {
+        String message = "Error: " + ex.getMessage();
+        ErrorInfo exceptionResponse = new ErrorInfo(HttpStatus.UNPROCESSABLE_ENTITY.value(), message,
+                ((ServletWebRequest)request).getRequest().getRequestURI(), true);
+        return new ResponseEntity<ErrorInfo>(exceptionResponse, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 }

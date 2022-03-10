@@ -7,11 +7,8 @@ import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.AccessType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
@@ -31,16 +28,16 @@ public class TextServImpl implements TextService{
 
     @Override
     public Text saveText(Text text) {
-        if(repositoryText.existsByHash(text.getHash())){
-            throw new BadRequestException("The hash '" + text.getHash() + "' is already registered");
+        if(text.getChars() < 2) text.setChars(2);
+        if(text.getChars() > text.getHash().length()) text.setChars(text.getHash().length());
+        if(existsHashWithChars(text)){
+            throw new BadRequestException("The same hash '"+ text.getHash() + "' is already registered with the same chars " + text.getChars());
         }
         List<String> stringList = arrayCadenaSeparadaPorParametro(text.getHash(), text.getChars());
-        log.info(stringList.toString());
-        log.info(mapTextoRepeticiones(stringList).toString());
         text.setResult(mapTextoRepeticiones(stringList));
-//        text.setHash(convertHash(text.getHash()));
         return repositoryText.save(text);
     }
+
     @Override
     public void borrarText(Long id) {
         repositoryText.deleteById(id);
@@ -58,12 +55,12 @@ public class TextServImpl implements TextService{
             fin+=parametroUsuario;
             if(fin<largoTexto){
                 String st = cadenString.substring(inicial, fin);
-                System.out.println(st);
+//                System.out.println(st);
                 textArrayList.add(st);
             }
             if(fin>=largoTexto){
                 String st = cadenString.substring(inicial, largoTexto);
-                System.out.println(st);
+//                System.out.println(st);
                 textArrayList.add(st);
             }
             inicial+=parametroUsuario;
@@ -99,34 +96,61 @@ public class TextServImpl implements TextService{
         return  repositoryText.findAll(PageRequest.of(pag, size));
     }
 
+
     @Override
-    public Page<Text> paginacion(String page, String rpp) {
-        int page1;
-        int rpp1;
-        if(page == null || rpp == null){
-            page1 = page == null ? 0 : Integer.valueOf(page);
-            rpp1 = page == null ? 10 : Integer.valueOf(rpp) > 100 ? 100 : Integer.valueOf(rpp);
-        }
-        page1 = Integer.valueOf(page) < 0 ? 0 : Integer.valueOf(page);
-        rpp1 = Integer.valueOf(rpp) < 10 ? 10 : Integer.valueOf(rpp) > 100 ? 100 : Integer.valueOf(rpp);
-        log.warn(String.valueOf(page1));
-        log.warn(String.valueOf(rpp1));
-//        page1 = page < 0 ? 0 : page;
-//        rpp1 = rpp < 10 ? 10 : rpp > 100 ? 100 : rpp;
-
-//        rpp1 = rpp > 100 ? 100 : rpp;
-//        Page page1 = repositoryText.findAll(PageRequest.of(page, rpp));
-//        log.warn(String.valueOf(page1.getContent()));
-//        if(page1.isEmpty()) throw new NotFoundException("no user found") ;
-        if (repositoryText.findAll(PageRequest.of(page1, rpp1)).getContent().isEmpty()) throw new NotFoundException("no user found");
-        return repositoryText.findAll(PageRequest.of(page1, rpp1));
+    public boolean existsHashWithChars(Text text) {
+        List <Text> hashEqual = repositoryText.findByHash(text.getHash());
+        boolean textEqual = hashEqual.stream().anyMatch(text1 -> text1.getChars() == text.getChars());
+        return textEqual;
     }
-
-
-
+    @Override
     public String convertHash(String hash){
         Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
         String hashing = argon2.hash(1, 1024, 1, hash);
         return hashing;
+    }
+
+
+    @Override
+    public List<Text> pagination(String page, String rpp) {
+        List<Integer> integers = filtersToPageAnRpp(page, rpp);
+        int page1 = integers.get(0);
+        int rpp1 = integers.get(1);
+        if (repositoryText.findAll(PageRequest.of(page1, rpp1)).getContent().isEmpty()) throw new NotFoundException("no user found");
+        return repositoryText.findAll(PageRequest.of(page1, rpp1)).getContent();
+    }
+
+
+    @Override
+    public List<Text> pagAndFindByChars(String page, String rpp, String chars) {
+        List<Integer> integers = filtersToPageAnRpp(page, rpp);
+        System.out.println(integers);
+        int page1 = integers.get(0);
+        int rpp1 = integers.get(1);
+        int chars1;
+        System.out.println(chars);
+        if (chars != null) {
+            chars1 = Integer.valueOf(chars);
+        } else {
+          return pagination(page, rpp);
+        }
+        System.out.println(isNumeric(chars));
+        List <Text> returnPagination = repositoryText.findAllByPageableAndChars(PageRequest.of(page1, rpp1), chars1).getContent();
+        if(returnPagination.isEmpty()) throw new NotFoundException("no user found");
+        return returnPagination;
+    }
+
+    public List<Integer> filtersToPageAnRpp(String page, String rpp){
+        int page1 = 0;
+        int rpp1 = 10;
+        if (page != null || isNumeric(page)) page1 = Integer.valueOf(page);
+        if (rpp != null || isNumeric(rpp)) rpp1 = Integer.valueOf(rpp);
+        if (rpp1 > 100) rpp1 = 100;
+        if (rpp1 < 10) rpp1 = 10;
+        List<Integer> resul = List.of(page1, rpp1);
+        return resul;
+    }
+    private static boolean isNumeric(String str){
+        return str != null && str.matches("[0-9.]+");
     }
 }

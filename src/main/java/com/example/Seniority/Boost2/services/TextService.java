@@ -16,6 +16,9 @@ public interface TextService {
     Optional<Text> findTextById(Long id);
     Page<Text> findAllText(int page, int size);
     List<Text> findByChars(int chars);
-    Page<Text> paginacion(String page, String rpp);
+    List<Text> pagination(String page, String rpp);
+    boolean existsHashWithChars(Text text);
+    String convertHash(String hash);
+    List<Text> pagAndFindByChars(String page, String rpp, String chars);
 }
 
