@@ -11,11 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
-
 import javax.validation.Valid;
-import java.util.Optional;
-
-import static java.lang.Integer.parseInt;
 
 @RequiredArgsConstructor
 @RestController
@@ -50,7 +46,7 @@ public class TextController {
                                 @RequestParam(value = "rpp", required = false) String rpp,
                                 @RequestParam(value = "page", required = false) String page)
         {
-            if(chars != null)return ResponseEntity.ok(textDto.listTextDto(textService.pagAndFindByChars(page, rpp, chars)));
+        if(chars != null)return ResponseEntity.ok(textDto.listTextDto(textService.pagAndFindByChars(page, rpp, chars)));
         return ResponseEntity.ok(textDto.listTextDto(textService.pagination(page, rpp)));
     }
 }

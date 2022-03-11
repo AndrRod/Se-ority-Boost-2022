@@ -7,17 +7,11 @@ import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static java.lang.Integer.parseInt;
-import static java.lang.String.valueOf;
-
-
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -84,17 +78,7 @@ public class TextServImpl implements TextService{
         if(repositoryText.findById(id).isEmpty()) throw new NotFoundException("Text not found");
         return repositoryText.findById(id);
     }
-//    @Override
-//    public List<Text> findByChars(int chars) {
-//        List<Text> listText = repositoryText.findByChars(chars);
-//        if(listText.isEmpty()) throw new NotFoundException("no user with that chars found") ;
-//        return listText;
-//    }
-//    @Override
-//    public Page<Text> findAllText(int pag, int size) {
-//        if(repositoryText.findAll().isEmpty()) throw new NotFoundException("no user found");
-//        return  repositoryText.findAll(PageRequest.of(pag, size));
-//    }
+
     @Override
     public boolean existsHashWithChars(Text text) {
         List <Text> hashEqual = repositoryText.findByText(text.getText());
@@ -132,7 +116,7 @@ public class TextServImpl implements TextService{
         } else {
           return pagination(page, rpp);
         }
-//        System.out.println(isNumeric(chars));
+
         List <Text> returnPagination = repositoryText.findAllByPageableAndChars(PageRequest.of(page1, rpp1), chars1).getContent();
         if(returnPagination.isEmpty()) throw new NotFoundException("no user found");
         return returnPagination;

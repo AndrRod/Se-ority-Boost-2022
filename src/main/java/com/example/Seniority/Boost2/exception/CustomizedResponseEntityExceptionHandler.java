@@ -27,7 +27,6 @@ public class CustomizedResponseEntityExceptionHandler {
     @ExceptionHandler(BadRequestException.class)
     public final ResponseEntity<ErrorInfo> handleBadReqException(BadRequestException ex, WebRequest request) {
         String message;
-//        System.out.println(ex.getMessage());
         if(ex.getMessage().isEmpty() || ex.getMessage() == "No message available") {
             message = "An error occurred when processing the text";
         }else{

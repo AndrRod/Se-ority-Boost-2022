@@ -11,11 +11,8 @@ import java.util.List;
 
 @Repository
 public interface TextRepository extends JpaRepository<Text, Long> {
-    List<Text> findByChars(int Chars);
     Page<Text> findAll(Pageable pageable);
     @Query("SELECT t FROM Text t WHERE t.chars = :chars")
     Page<Text> findAllByPageableAndChars(Pageable pageable, int chars);
     List<Text> findByText(String text);
-
-
 }
