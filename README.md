@@ -36,12 +36,13 @@ siempre, incluso si sucede un error.
 
 ## 2. TEXT (CRUD)
 
+
+- Para crear un nuevo text, se hace una validación que consiste en no guardar otro Text si se encuentra registrado text con la misma cantidad de chars.
+  Chars: Tiene un valor por defecto (2) si el usuario ingresa uno menor se guarda el valor por defecto.
+
 ### POST
 	http://localhost:8080/text/
 
-
-Para crear un nuevo text, se hace una validación que consiste en no guardar otro Text si se encuentra registrado text con la misma cantidad de chars.
-Chars: Tiene un valor por defecto (2) si el usuario ingresa uno menor se guarda el valor por defecto.
 
 Ejemplo entrada:
 
@@ -114,3 +115,9 @@ Ejemplo de salida de dato erroneo:
     "code": 422,
     "url": "/text"
     }
+
+
+
+______________
+
+Hecho por  [Andres Rodriguez](https://github.com/AndrRod/ "Andres Rodriguez") 🎁
