@@ -89,9 +89,9 @@ Ejemplo salida si el text no es encontrado:
 
 Parámetros del query string:
 El usuario puede ingresar todos los parametros o solo uno de ellos debido a que los tres son opcionales.
-Chars (opcional): En el caso de que el usuario no elija ningun numero se realizara la busqueda por Page y rpp.
-Page (opcional): valor por defecto es 0 en el caso de que el usuario no ingreso un valor o este sea inferior a 0;
-rpp (opcional): valor por defecto entre 10 y 100, dependiendo si el usuario ingresa un numero menor o mayor a los citados.
+- Chars (opcional): En el caso de que el usuario no elija ningun numero se realizara la busqueda por Page y rpp.
+- Page (opcional): valor por defecto es 0 en el caso de que el usuario no ingreso un valor o este sea inferior a 0;
+- rpp (opcional): valor por defecto entre 10 y 100, dependiendo si el usuario ingresa un numero menor o mayor a los citados.
 
 
 Busqueda por chars, page y rpp
