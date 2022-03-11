@@ -126,6 +126,7 @@ public class TextServImpl implements TextService{
         int page1 = 0;
         int rpp1 = 10;
         if (page != null || isNumeric(page)) page1 = Integer.valueOf(page);
+        if (page1 < 0) page1 = 0;
         if (rpp != null || isNumeric(rpp)) rpp1 = Integer.valueOf(rpp);
         if (rpp1 > 100) rpp1 = 100;
         if (rpp1 < 10) rpp1 = 10;
