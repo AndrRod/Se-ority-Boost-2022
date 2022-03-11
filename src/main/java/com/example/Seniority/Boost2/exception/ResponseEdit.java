@@ -1,11 +1,11 @@
 package com.example.Seniority.Boost2.exception;
 
-public class responseEdit {
+public class ResponseEdit {
 
     private Long id;
     private String url;
 
-    public responseEdit(Long id, String url) {
+    public ResponseEdit(Long id, String url) {
         this.id = id;
         this.url = url;
     }

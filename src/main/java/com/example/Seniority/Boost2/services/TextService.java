@@ -14,8 +14,8 @@ public interface TextService {
     List<String> arrayCadenaSeparadaPorParametro(String cadena, int paramUsuario);
     HashMap<String, Number> mapTextoRepeticiones(List cadenaSeparada);
     Optional<Text> findTextById(Long id);
-    Page<Text> findAllText(int page, int size);
-    List<Text> findByChars(int chars);
+//    Page<Text> findAllText(int page, int size);
+//    List<Text> findByChars(int chars);
     List<Text> pagination(String page, String rpp);
     boolean existsHashWithChars(Text text);
     String convertHash(String hash);

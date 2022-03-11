@@ -29,12 +29,16 @@ public class TextServImpl implements TextService{
     @Override
     public Text saveText(Text text) {
         if(text.getChars() < 2) text.setChars(2);
-        if(text.getChars() > text.getHash().length()) text.setChars(text.getHash().length());
-        if(existsHashWithChars(text)){
-            throw new BadRequestException("The same hash '"+ text.getHash() + "' is already registered with the same chars " + text.getChars());
+        if(text.getText() == null){
+            throw new BadRequestException("The text can´t be null");
         }
-        List<String> stringList = arrayCadenaSeparadaPorParametro(text.getHash(), text.getChars());
+        if(text.getChars() > text.getText().length()) text.setChars(text.getText().length());
+        if(existsHashWithChars(text)){
+            throw new BadRequestException("The same text '"+ text.getText() + "' is already registered with the same chars " + text.getChars());
+        }
+        List<String> stringList = arrayCadenaSeparadaPorParametro(text.getText(), text.getChars());
         text.setResult(mapTextoRepeticiones(stringList));
+        text.setHash(convertHash(text.getText()));
         return repositoryText.save(text);
     }
 
@@ -80,26 +84,20 @@ public class TextServImpl implements TextService{
         if(repositoryText.findById(id).isEmpty()) throw new NotFoundException("Text not found");
         return repositoryText.findById(id);
     }
-
-
-
-    @Override
-    public List<Text> findByChars(int chars) {
-        List<Text> listText = repositoryText.findByChars(chars);
-        if(listText.isEmpty()) throw new NotFoundException("no user with that chars found") ;
-        return listText;
-    }
-
-    @Override
-    public Page<Text> findAllText(int pag, int size) {
-        if(repositoryText.findAll().isEmpty()) throw new NotFoundException("no user found");
-        return  repositoryText.findAll(PageRequest.of(pag, size));
-    }
-
-
+//    @Override
+//    public List<Text> findByChars(int chars) {
+//        List<Text> listText = repositoryText.findByChars(chars);
+//        if(listText.isEmpty()) throw new NotFoundException("no user with that chars found") ;
+//        return listText;
+//    }
+//    @Override
+//    public Page<Text> findAllText(int pag, int size) {
+//        if(repositoryText.findAll().isEmpty()) throw new NotFoundException("no user found");
+//        return  repositoryText.findAll(PageRequest.of(pag, size));
+//    }
     @Override
     public boolean existsHashWithChars(Text text) {
-        List <Text> hashEqual = repositoryText.findByHash(text.getHash());
+        List <Text> hashEqual = repositoryText.findByText(text.getText());
         boolean textEqual = hashEqual.stream().anyMatch(text1 -> text1.getChars() == text.getChars());
         return textEqual;
     }
@@ -124,17 +122,17 @@ public class TextServImpl implements TextService{
     @Override
     public List<Text> pagAndFindByChars(String page, String rpp, String chars) {
         List<Integer> integers = filtersToPageAnRpp(page, rpp);
-        System.out.println(integers);
+//        System.out.println(integers);
         int page1 = integers.get(0);
         int rpp1 = integers.get(1);
         int chars1;
-        System.out.println(chars);
+//        System.out.println(chars);
         if (chars != null) {
             chars1 = Integer.valueOf(chars);
         } else {
           return pagination(page, rpp);
         }
-        System.out.println(isNumeric(chars));
+//        System.out.println(isNumeric(chars));
         List <Text> returnPagination = repositoryText.findAllByPageableAndChars(PageRequest.of(page1, rpp1), chars1).getContent();
         if(returnPagination.isEmpty()) throw new NotFoundException("no user found");
         return returnPagination;

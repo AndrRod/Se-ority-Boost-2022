@@ -27,7 +27,7 @@ public class CustomizedResponseEntityExceptionHandler {
     @ExceptionHandler(BadRequestException.class)
     public final ResponseEntity<ErrorInfo> handleBadReqException(BadRequestException ex, WebRequest request) {
         String message;
-        System.out.println(ex.getMessage());
+//        System.out.println(ex.getMessage());
         if(ex.getMessage().isEmpty() || ex.getMessage() == "No message available") {
             message = "An error occurred when processing the text";
         }else{
@@ -50,8 +50,8 @@ public class CustomizedResponseEntityExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     public final ResponseEntity<ErrorInfo> ilegalArgumentException(WebRequest request, IllegalArgumentException ex) {
         String message = "Error: " + ex.getMessage();
-        ErrorInfo exceptionResponse = new ErrorInfo(HttpStatus.UNPROCESSABLE_ENTITY.value(), message,
+        ErrorInfo exceptionResponse = new ErrorInfo(HttpStatus.BAD_REQUEST.value(), message,
                 ((ServletWebRequest)request).getRequest().getRequestURI(), true);
-        return new ResponseEntity<ErrorInfo>(exceptionResponse, HttpStatus.UNPROCESSABLE_ENTITY);
+        return new ResponseEntity<ErrorInfo>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 }

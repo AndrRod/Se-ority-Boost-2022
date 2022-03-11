@@ -15,7 +15,7 @@ public interface TextRepository extends JpaRepository<Text, Long> {
     Page<Text> findAll(Pageable pageable);
     @Query("SELECT t FROM Text t WHERE t.chars = :chars")
     Page<Text> findAllByPageableAndChars(Pageable pageable, int chars);
-    List<Text> findByHash(String hash);
+    List<Text> findByText(String text);
 
 
 }
