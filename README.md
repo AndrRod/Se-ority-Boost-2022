@@ -17,11 +17,12 @@ siempre, incluso si sucede un error.
 
 ## REQUERIMIENTOS 📖
 
-- 👉 Utilizar Spring Boot
-- 👉 Las rutas deberán seguir el patrón REST
 - 👉 La API REST consiste de 4 endpoints. Todas las rutas de los endpoints deben llamarse “/text”.
   Solo se aceptarán peticiones con los métodos GET, POST, DELETE.
 - 👉 Esta API es como una API pública. Es decir, no requiere de ningún mecanismo de autenticación
+- 👉 Manejo de Excepciones.
+- 👉 Cors: configurado para que pueda acceder desde cualquier URL.
+
 
 ## 1. Modelado de Base de Datos
 ### De la siguiente entidad registra:
@@ -84,7 +85,7 @@ Ejemplo salida si usario no es encontrado:
     }
 
 
-### 5. Búsqueda de Text
+### Búsqueda de entidad Text
 
 Parámetros del query string:
 El usuario puede ingresar todos los parametros o solo uno de ellos debido a que los tres son opcionales.
