@@ -75,7 +75,7 @@ Ejemplo entrada:
 
     http://localhost:8080/text/1
 
-Ejemplo salida si usario no es encontrado:
+Ejemplo salida si el text no es encontrado:
 
     {
     "message": "Text not found",
