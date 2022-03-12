@@ -85,6 +85,44 @@ Ejemplo salida si el text no es encontrado:
     "url": "/text/1"
     }
 
+### GET by ID
+    
+    http://localhost:8080/text/{Id}
+
+Ejemplo de entrada:
+
+    http://localhost:8080/text/1
+
+Ejemplo salida correcta: 
+
+    {
+    "id": 1,
+    "hash": "$argon2id$v=19$m=1024,t=1,p=1$37UmPFXJOmYtM4/P1k9+bw$w1N5wldXVv5VUPHdK5XJ6WAvxkUfzd9F+poJ7JjC164",
+    "chars": 3,
+    "result": {
+        "a a": 1,
+        "hol": 1,
+        "ndr": 1,
+        "es": 1
+    }
+
+Ejemplo salida text no encontrado:
+
+    {
+    "message": "Text not found",
+    "error": true,
+    "code": 404,
+    "url": "/text/23"
+    }
+
+Ejemplo salida erronea:
+
+    {
+    "message": "Error: For input string: \"232d\"",
+    "error": true,
+    "code": 422,
+    "url": "/text/232d"
+    }
 
 ### Búsqueda de entidad Text
 
