@@ -27,7 +27,7 @@ public class TextController {
     @PostMapping(value = "/")
     public ResponseEntity<?> savingText(@Valid @RequestBody Text text, WebRequest request){
             textService.saveText(text);
-            return ResponseEntity.ok(new ResponseEdit(text.getId(), ((ServletWebRequest)request).getRequest().getRequestURI()+text.getId()));
+            return ResponseEntity.created(null).body(new ResponseEdit(text.getId(), ((ServletWebRequest)request).getRequest().getRequestURI()+text.getId()));
     }
     @DeleteMapping(value = "/{id}")
     public ResponseEntity deleteByIdText(@Valid @PathVariable Long id, WebRequest request){
