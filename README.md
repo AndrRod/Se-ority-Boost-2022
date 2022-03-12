@@ -1,6 +1,6 @@
 # CHALLENGE BACKEND - Java - Spring Boot (API REST) 🚀
 
-## Consigna
+## CONSIGNA
 - El objetivo de este challenge es desarrollar una API REST siguiendo las especificaciones que
 indicaremos luego. Este servicio analizará textos y devolverá conteos acerca de caracteres y
 palabras. Todas las interacciones tendrán efecto sobre la base de datos para alguna operación
@@ -23,6 +23,7 @@ siempre, incluso si sucede un error.
 - 👉 Manejo de Excepciones.
 - 👉 Cors: configurado para que pueda acceder desde cualquier URL.
 - 👉 Utilización de Spring Boot.
+- 👉 Para probar la Api Rest se dejo guardado una coleccion de postman dentro del proyecto.
 
 
 ## 1. Modelado de Base de Datos
