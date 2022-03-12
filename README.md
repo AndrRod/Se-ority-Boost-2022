@@ -30,7 +30,7 @@ siempre, incluso si sucede un error.
 - Id (Long - Autogenerado)
 - text (String) - se almacenará pero no se mostrara.
 - hash (String) - hasheado con Argon2.
-- chas (Int).
+- chars (Int).
 - result (HashMap<String, Number>).
 
 
@@ -38,7 +38,8 @@ siempre, incluso si sucede un error.
 
 
 - Para crear un nuevo text, se hace una validación que consiste en no guardar otro Text si se encuentra registrado text con la misma cantidad de chars.
-  Chars: Tiene un valor por defecto (2) si el usuario ingresa uno menor se guarda el valor por defecto.
+- Chars: Tiene un valor por defecto (2) si el usuario ingresa uno menor se guarda el valor por defecto.
+- Los unicos parametros accesibles para el usuario son text y chars, los demas son ignorados (@JsonIgnore)
 
 ### POST
 	http://localhost:8080/text/
