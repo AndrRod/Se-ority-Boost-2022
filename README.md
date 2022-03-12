@@ -22,6 +22,7 @@ siempre, incluso si sucede un error.
 - 👉 Esta API es como una API pública. Es decir, no requiere de ningún mecanismo de autenticación
 - 👉 Manejo de Excepciones.
 - 👉 Cors: configurado para que pueda acceder desde cualquier URL.
+- 👉 Utilización de Spring Boot.
 
 
 ## 1. Modelado de Base de Datos
