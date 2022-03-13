@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
@@ -62,6 +63,13 @@ public class CustomizedResponseEntityExceptionHandler {
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public final ResponseEntity<ErrorInfo> NotSupportedException(WebRequest request, HttpRequestMethodNotSupportedException ex) {
+        String message = ex.getMessage();
+        ErrorInfo exceptionResponse = new ErrorInfo(HttpStatus.METHOD_NOT_ALLOWED.value(), message,
+                ((ServletWebRequest)request).getRequest().getRequestURI(), true);
+        return new ResponseEntity<ErrorInfo>(exceptionResponse, HttpStatus.METHOD_NOT_ALLOWED);
+    }
+    @ExceptionHandler(MissingPathVariableException.class)
+    public final ResponseEntity<ErrorInfo> NotSupportedException(WebRequest request, MissingPathVariableException ex) {
         String message = ex.getMessage();
         ErrorInfo exceptionResponse = new ErrorInfo(HttpStatus.BAD_REQUEST.value(), message,
                 ((ServletWebRequest)request).getRequest().getRequestURI(), true);
