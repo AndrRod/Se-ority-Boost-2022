@@ -1,7 +1,5 @@
 package com.example.Seniority.Boost2.exception;
 
-import org.springframework.http.HttpStatus;
-
 public class ErrorInfo {
     private String message;
     private Boolean error;

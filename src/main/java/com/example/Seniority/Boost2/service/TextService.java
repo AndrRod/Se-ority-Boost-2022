@@ -1,7 +1,6 @@
-package com.example.Seniority.Boost2.services;
+package com.example.Seniority.Boost2.service;
 
-import com.example.Seniority.Boost2.entites.Text;
-import org.springframework.data.domain.Page;
+import com.example.Seniority.Boost2.entity.Text;
 
 import java.util.HashMap;
 import java.util.List;

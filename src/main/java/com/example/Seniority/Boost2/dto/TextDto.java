@@ -1,6 +1,6 @@
 package com.example.Seniority.Boost2.dto;
 
-import com.example.Seniority.Boost2.entites.Text;
+import com.example.Seniority.Boost2.entity.Text;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,9 +1,9 @@
 package com.example.Seniority.Boost2.controller;
 
 import com.example.Seniority.Boost2.dto.TextDto;
-import com.example.Seniority.Boost2.entites.Text;
+import com.example.Seniority.Boost2.entity.Text;
 import com.example.Seniority.Boost2.exception.ResponseEdit;
-import com.example.Seniority.Boost2.services.TextService;
+import com.example.Seniority.Boost2.service.TextService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
 
 @RequiredArgsConstructor
 @RestController

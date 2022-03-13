@@ -1,5 +1,5 @@
-package com.example.Seniority.Boost2.services;
-import com.example.Seniority.Boost2.entites.Text;
+package com.example.Seniority.Boost2.service;
+import com.example.Seniority.Boost2.entity.Text;
 import com.example.Seniority.Boost2.exception.BadRequestException;
 import com.example.Seniority.Boost2.exception.NotFoundException;
 import com.example.Seniority.Boost2.repository.TextRepository;
