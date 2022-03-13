@@ -6,10 +6,13 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.util.Date;
 
@@ -51,6 +54,14 @@ public class CustomizedResponseEntityExceptionHandler {
     }
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public final ResponseEntity<ErrorInfo> HttpMessageNotReadableException(WebRequest request, HttpMessageNotReadableException ex) {
+        String message = ex.getMessage();
+        ErrorInfo exceptionResponse = new ErrorInfo(HttpStatus.BAD_REQUEST.value(), message,
+                ((ServletWebRequest)request).getRequest().getRequestURI(), true);
+        return new ResponseEntity<ErrorInfo>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public final ResponseEntity<ErrorInfo> NotSupportedException(WebRequest request, HttpRequestMethodNotSupportedException ex) {
         String message = ex.getMessage();
         ErrorInfo exceptionResponse = new ErrorInfo(HttpStatus.BAD_REQUEST.value(), message,
                 ((ServletWebRequest)request).getRequest().getRequestURI(), true);

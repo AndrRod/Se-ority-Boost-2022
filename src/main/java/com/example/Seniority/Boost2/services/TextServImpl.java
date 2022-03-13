@@ -98,7 +98,7 @@ public class TextServImpl implements TextService{
         List<Integer> integers = filtersToPageAnRpp(page, rpp);
         int page1 = integers.get(0);
         int rpp1 = integers.get(1);
-        if (repositoryText.findAll(PageRequest.of(page1, rpp1)).getContent().isEmpty()) throw new NotFoundException("no user found");
+        if (repositoryText.findAll(PageRequest.of(page1, rpp1)).getContent().isEmpty()) throw new NotFoundException("Text not found");
         return repositoryText.findAll(PageRequest.of(page1, rpp1)).getContent();
     }
 
@@ -118,7 +118,7 @@ public class TextServImpl implements TextService{
         }
 
         List <Text> returnPagination = repositoryText.findAllByPageableAndChars(PageRequest.of(page1, rpp1), chars1).getContent();
-        if(returnPagination.isEmpty()) throw new NotFoundException("no user found");
+        if(returnPagination.isEmpty()) throw new NotFoundException("Text not found");
         return returnPagination;
     }
 
