@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 
+import javax.validation.ConstraintViolationException;
+import java.util.EmptyStackException;
 
 
 @RestControllerAdvice
@@ -67,6 +69,13 @@ public class CustomizedResponseEntityExceptionHandler {
     @ExceptionHandler(MissingPathVariableException.class)
     public final ResponseEntity<ErrorInfo> NotSupportedException(WebRequest request, MissingPathVariableException ex) {
         String message = ex.getMessage();
+        ErrorInfo exceptionResponse = new ErrorInfo(HttpStatus.BAD_REQUEST.value(), message,
+                ((ServletWebRequest)request).getRequest().getRequestURI(), true);
+        return new ResponseEntity<ErrorInfo>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(ConstraintViolationException.class)
+    public final ResponseEntity<ErrorInfo> NotSupportedException(WebRequest request, ConstraintViolationException ex) {
+        String message = ex.getConstraintViolations().iterator().next().getMessageTemplate();
         ErrorInfo exceptionResponse = new ErrorInfo(HttpStatus.BAD_REQUEST.value(), message,
                 ((ServletWebRequest)request).getRequest().getRequestURI(), true);
         return new ResponseEntity<ErrorInfo>(exceptionResponse, HttpStatus.BAD_REQUEST);

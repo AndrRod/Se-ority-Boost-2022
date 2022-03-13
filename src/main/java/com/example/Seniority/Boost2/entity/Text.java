@@ -1,7 +1,9 @@
 package com.example.Seniority.Boost2.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.HashMap;
 
 @Entity
@@ -10,6 +12,7 @@ public class Text {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty(message = "The text can´t be Empty")
     private String text;
     private String hash;
     private int chars;

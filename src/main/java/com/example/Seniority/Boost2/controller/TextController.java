@@ -26,18 +26,18 @@ public class TextController {
     private TextDto textDto;
 
     @PostMapping(value = "/")
-    public ResponseEntity<?> savingText(@Valid @RequestBody Text text, WebRequest request){
+    public ResponseEntity<?> savingText(@RequestBody Text text, WebRequest request){
             textService.saveText(text);
             return ResponseEntity.created(null).body(new ResponseEdit(text.getId(), ((ServletWebRequest)request).getRequest().getRequestURI()+text.getId()));
     }
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity deleteByIdText(@Valid @PathVariable Long id, WebRequest request){
+    public ResponseEntity deleteByIdText(@PathVariable Long id, WebRequest request){
         Text text = textService.findTextById(id).get();
         textService.borrarText(id);
         return ResponseEntity.ok().build();
     }
     @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getByIdText(@Valid @PathVariable Long id){
+    public ResponseEntity<?> getByIdText(@PathVariable Long id){
         Text text = textService.findTextById(id).get();
             return ResponseEntity.ok(textDto.textToDto(text));
     }
