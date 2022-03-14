@@ -26,7 +26,7 @@ siempre, incluso si sucede un error.
 - 👉 Para probar la Api Rest se dejo guardado una coleccion de postman dentro del proyecto.
 
 ## hard-coded
-- 👉 En clase principal (SeniorityBoost2022Aplication) fueron harcodeados datos para probar la base de datos sin necesadidad de que el usuario ingrese los datos, por lo que para anular los datos ingresados directamente comentar las lineas de codio correspondiente.
+- 👉 En clase principal (SeniorityBoost2022Aplication) fueron harcodeados datos para probar la base de datos sin necesadidad de que el usuario ingrese los datos, por lo que para anular los datos ingresados directamente comentar las lineas de codigo correspondiente.
 
 ## 1. Modelado de Base de Datos
 ### De la siguiente entidad registra:
