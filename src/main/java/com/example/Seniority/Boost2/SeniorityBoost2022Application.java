@@ -14,6 +14,7 @@ public class SeniorityBoost2022Application{
 	}
 
 	@Bean
+
 	CommandLineRunner run(TextService textService){
 		return args -> {
 			textService.saveText(new Text(null, "Uno", null, 2, null));
